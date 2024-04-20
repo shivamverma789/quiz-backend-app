@@ -1,25 +1,26 @@
 // controllers/quizController.js
 
 const Quiz = require('../models/quizModel');
+const quizService = require('../services/quizService');
 
 // Controller function to create a new quiz
 exports.createQuiz = async (req, res, next) => {
     try {
-        console.log(req.body);
         const { question, options, rightAnswer, startDate, endDate } = req.body;
         
         // Validate required fields
         if (!question || !options || !startDate || !endDate) {
             return res.status(400).json({ message: 'All fields are required' });
         }
-
+        const status = quizService.getStatus(startDate, endDate);
         // Create new quiz object
         const quiz = new Quiz({
             question,
             options,
             rightAnswer,
             startDate,
-            endDate
+            endDate,
+            status
         });
 
         // Save quiz to the database
@@ -36,6 +37,14 @@ exports.createQuiz = async (req, res, next) => {
 exports.getActiveQuizzes = async (req, res) => {
     try {
         const activeQuizzes = await Quiz.find({ status: 'active' });
+        //if no active quizzes send message
+        if (activeQuizzes.length === 0) {
+            return res.status(404).json({ message: 'No active quizzes available' });
+        }
+        if (!activeQuizzes || activeQuizzes.length === 0) {
+            return res.status(404).json({ message: 'No active quizzes available' });
+        }
+        
         res.status(200).json(activeQuizzes);
     } catch (error) {
         console.error(error);

@@ -5,18 +5,22 @@ const Quiz = require('../models/quizModel');
 exports.updateQuizStatus = async () => {
     try {
         const currentDateTime = new Date();
+
+         //find the quizzes that are active
         const activeQuizzes = await Quiz.find({
             startDate: { $lte: currentDateTime },
             endDate: { $gte: currentDateTime }
         });
 
-        const finishedQuizzes = await Quiz.find({ endDate: { $lt: currentDateTime } });
 
         // Update status for active quizzes
         await Promise.all(activeQuizzes.map(async (quiz) => {
             quiz.status = 'active';
             await quiz.save();
         }));
+
+        //find the quizzes that are finished
+        const finishedQuizzes = await Quiz.find({ endDate: { $lt: currentDateTime } });
 
         // Update status for finished quizzes
         await Promise.all(finishedQuizzes.map(async (quiz) => {
@@ -42,3 +46,24 @@ exports.updateQuizStatus = async () => {
         console.error('Error updating quiz status:', error);
     }
 };
+
+
+exports.getStatus = (startDate, endDate) => {
+    try {
+        const currentTime = new Date();
+        const startDateObj = new Date(startDate);
+        const endDateObj = new Date(endDate);
+
+        if (currentTime < startDateObj) {
+            return 'inactive';
+        } else if (currentTime >= startDateObj && currentTime <= endDateObj) {
+            return 'active';
+        } else {
+            return 'finished';
+        }
+    } catch (error) {
+        console.error('Error getting status:', error);
+        return 'error';
+    }
+};
+

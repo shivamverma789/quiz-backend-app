@@ -12,6 +12,7 @@ const handleErrors = require('./middleware/errorMiddleware'); // Import error ha
 const authMiddleware = require('./middleware/authMiddleware'); // Import authentication middleware
 
 
+
 // Create Express app
 const app = express();
 
@@ -33,7 +34,7 @@ app.use(handleErrors);
 
 // Routes
 app.use('/auth', authRoutes); // Authentication routes
-app.use('/quizzes', authMiddleware.authenticateUser,  quizRoutes); // Protected routes
+app.use('/quizzes', authMiddleware.authenticateUser ,  quizRoutes); // Protected routes
 
 // Start the server
 const PORT = process.env.PORT || 3000;

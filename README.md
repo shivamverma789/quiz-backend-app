@@ -8,8 +8,8 @@ The Quiz App is a web application that allows users to create, participate in, a
 - Set start and end times for quizzes
 - Participate in quizzes and view results
 - User authentication and registration
-- There are three status for the quiz :
-    (active - currently active , finished - end date completed result not published , resultAvailable - results available after 5 min of endDate )
+- There are four status for the quiz :
+    (inactive - the quiz is not started yet , active - currently active , finished - end date completed result not published , resultAvailable - results available after 5 min of endDate )
 
 ## Installation
 1. Clone the repository to your local machine.
@@ -58,7 +58,7 @@ quiz-api/
 │   └── rateLimit.js      # Middleware for rate limiting
 │
 ├── services/
-│   ├── quizService.js    # Service layer for quiz-related logic
+│   ├── quizService.js    # Service layer for quiz status update service
 │
 ├── index.js              # Main entry point of the application
 ├── package.json          # Project dependencies and scripts
