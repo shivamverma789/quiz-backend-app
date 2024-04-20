@@ -32,7 +32,7 @@ The Quiz App is a web application that allows users to create, participate in, a
 - Rate limiter for limiting requests
 
 ## Project Structure
-
+```
 quiz-api/
 │
 ├── config/
@@ -63,7 +63,7 @@ quiz-api/
 ├── index.js              # Main entry point of the application
 ├── package.json          # Project dependencies and scripts
 └── README.md             # Project documentation
-
+```
 
 ## API Documentation
 
