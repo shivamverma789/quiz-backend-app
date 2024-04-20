@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose');
 
+// Define the schema for the quiz data
 const quizSchema = new mongoose.Schema({
     question: {
         type: String,
@@ -25,10 +26,11 @@ const quizSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['active', 'finished', 'resultAvailable'] 
+        enum: ['active', 'finished', 'resultAvailable'] // Status can be 'active', 'finished', or 'resultAvailable'
         } 
 });
 
+// Create a Quiz model using the schema
 const Quiz = mongoose.model('Quiz', quizSchema);
 
 module.exports = Quiz;

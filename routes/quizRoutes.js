@@ -8,13 +8,16 @@ const quizController = require('../controllers/quizController');
 // Import authenticateUser middleware
 const { authenticateUser } = authMiddleware;
 
-// authenticateUser,
-
 // POST /quizzes - Create a new quiz
-router.post('/', quizController.createQuiz);
-router.get('/active', quizController.getActiveQuizzes);
-router.get('/:id/result', quizController.getQuizResult);
-router.get('/all', quizController.getAllQuizzes);
+router.post('/', authenticateUser, quizController.createQuiz);
 
+// GET /quizzes/active - Retrieve the currently active quiz
+router.get('/active', authenticateUser, quizController.getActiveQuizzes);
+
+// GET /quizzes/:id/result - Retrieve the result of a quiz by ID
+router.get('/:id/result', authenticateUser, quizController.getQuizResult);
+
+// GET /quizzes/all - Retrieve all quizzes (including inactive and finished)
+router.get('/all', authenticateUser, quizController.getAllQuizzes);
 
 module.exports = router;

@@ -6,6 +6,8 @@ const User = require('../models/userModel'); // Assuming you have a User model
 
 const { jwtSecret } = require('../config/auth');
 
+
+// Controller function to register a new user
 exports.registerUser = async (req, res) => {
     try {
       const { username, password, email } = req.body;
@@ -36,6 +38,7 @@ exports.registerUser = async (req, res) => {
     }
   };
 
+  // Controller function to authenticate user and generate JWT token for login
 exports.login = async (req, res) => {
     const { username, password } = req.body;
 
@@ -52,7 +55,7 @@ exports.login = async (req, res) => {
             return res.status(401).json({ message: 'Invalid username or password' });
         }
 
-
+         // If authentication is successful, generate a JWT token with the user ID and secret key
         const token = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: '1h' });
 
         res.status(200).json({ token });
